@@ -17,3 +17,7 @@ To compile the code:
 
 ```bash
 wmake
+After executing this command, a new solver named `concenFoam` will be compiled.  
+This solver is capable of performing transient turbulent flow simulations coupled with the Eulerian concentration transport equation.
+
+It should be noted that the concentration scalar field in this solver is defined by the variable `T`.
