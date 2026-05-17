@@ -1,32 +1,67 @@
-# An-OpenFOAM-based-LES-solver-for-Eulerian-concentration-transport-and-scalar-dispersion-simulations.
-OpenFOAM solver for Large Eddy Simulation (LES) coupled with Eulerian concentration equations, using the CDRFG method for turbulent LES inflow generation.
-## Case Files
-
+# CDRFG-synthetic-turbulence-inflow
 An OpenFOAM simulation case is included with this repository.  
 A coarse background mesh corresponding to the geometry has been uploaded due to its relatively small size. Therefore, mesh generation is not required before running the case.
 
-## Compilation
+# Compilation
+### Requirements
+* OpenFOAM, preferably v8
 
+The code provided was written for OpenFoam version 8 and requires modifications for use in higher versions of the software.
+### Build from source
 Before running the simulation, the solver modifications related to the Eulerian concentration equation must be compiled.
 
-To compile the code:
+* Clone the code to your computer:
+*Enter the source code directory.
+* Compile the code in $FOAM_UTILITIES/preProcessing/CDRFGcode:
+  
+          $ cd $FOAM_UTILITIES/preProcessing/CDRFGcode
+  
+          $ ./Allwclean
 
-1. Enter the source code directory.
-2. Open a terminal in that directory with the OpenFOAM environment loaded.
-3. Run the following command:
+          $ ./Allwmake
 
-```bash
-wmake
-After executing this command, a new solver named `concenFoam` will be compiled.  
-This solver is capable of performing transient turbulent flow simulations coupled with the Eulerian concentration transport equation.
+  The CDRFG is now compiled for use in OpenFOAM software and can be run with the ` cdrfgRun ` command in serial.
 
-It should be noted that the concentration scalar field in this solver is defined by the variable `T`.
+# Simulation Test
 
-### Synthetic Turbulence Inflow Generation
+In the test folder, a setup for a simulation is provided. This simulation consists of two stages: the first stage is the execution of the CDRFG code to create an artificial turbolance flow at the inlet boundary, and the second stage is the main simulation with the LES model.
 
-In the next step, the `CDRFG` utility must be executed in the main case directory in order to generate synthetic turbulent inflow data for the inlet plane over the desired time intervals.
+### Input parameters for CDRFG
+The directory test/constant contains a file called mean_velocity_Properties, in which the inlet flow characteristics can be configured. In this file, based on the atmospheric boundary layer profile, the dependence of velocity components, turbulence intensity, and turbulence length scale on the height above ground level is specified at several points. The corresponding profile is then constructed through interpolation and extrapolation.
 
-The compilation procedure and complete usage instructions for this utility are fully described in the following repository:
-https://github.com/egtbomb/CDRFG-synthetic-turbulence-inflow
+In the test/constant directory, the file CDRFG_Properties is also available. This file contains the settings related to the CDRFG method, including the specification of parameters, some examples of which are provided below.
+* nf 100;// Number of random frequencies in one segment 
+* nm   100;     // Number of frequency segments 
+* nt   20;       // Number of time steps 
+* fmax   100;   // Maximum frequency
+* dtt   0.001;      // Time step (s)
+* DGamma 0.22;      // Characteristic length used to maintain the coherency 
+* Coherency  (10   10   10); //  Coherency decay constants in x, y
+  
+Please note that the time step and the number of solution steps specified in this file must be consistent with those defined in the controlDict file.
 
-- :contentReference[oaicite:0]{index=0}
+### Excuting the test case
+In the test directory, follow the steps below.
+* Generate the mesh using the following command.
+  
+           $ blockMesh
+
+* Run the CDRFG code.
+  
+           $ cdrfgRun
+  
+ After running this code, the constant/boundaryData/inlet directory is generated, in which a U file is created for each time step for all inlet boundary points. Each file contains random instantaneous velocity values.
+
+* Decompose the case:
+
+           $ decomposePar
+
+*  Finally run the LES case:
+
+          $ mpirun -np 4 pisoFoam -parallel
+
+
+# Reference
+[1]	H. Aboshosha, A. Elshaer, G. T. Bitsuamlak, and A. El Damatty, “Consistent inflow turbulence generator for LES evaluation of wind-induced responses for tall buildings,” J. Wind Eng. Ind. Aerodyn., vol. 142, pp. 198–216, Jul. 2015
+
+
