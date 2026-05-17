@@ -21,3 +21,12 @@ After executing this command, a new solver named `concenFoam` will be compiled.
 This solver is capable of performing transient turbulent flow simulations coupled with the Eulerian concentration transport equation.
 
 It should be noted that the concentration scalar field in this solver is defined by the variable `T`.
+
+## Synthetic Turbulence Inflow Generation
+
+In the next step, the `CDRFG` utility must be executed in the main case directory in order to generate synthetic turbulent inflow data for the inlet plane over the desired time intervals.
+
+The compilation procedure and complete usage instructions for this utility are fully described in the following repository:
+https://github.com/egtbomb/CDRFG-synthetic-turbulence-inflow
+
+- :contentReference[oaicite:0]{index=0}
