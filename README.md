@@ -1,4 +1,4 @@
-# CDRFG-synthetic-turbulence-inflow
+# OpenFOAM-LES-EulerianConcentration
 An OpenFOAM simulation case is included with this repository.  
 A coarse background mesh corresponding to the geometry has been uploaded due to its relatively small size. Therefore, mesh generation is not required before running the case.
 
