@@ -22,7 +22,7 @@ This solver is capable of performing transient turbulent flow simulations couple
 
 It should be noted that the concentration scalar field in this solver is defined by the variable `T`.
 
-## Synthetic Turbulence Inflow Generation
+### Synthetic Turbulence Inflow Generation
 
 In the next step, the `CDRFG` utility must be executed in the main case directory in order to generate synthetic turbulent inflow data for the inlet plane over the desired time intervals.
 
