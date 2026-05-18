@@ -3,6 +3,10 @@ An OpenFOAM simulation case is included with this repository.
 A coarse background mesh corresponding to the geometry has been uploaded due to its relatively small size. Therefore, mesh generation is not required before running the case.
 The case files contain the simulation results at a specific time step along with all settings applied for the solution process. If rerunning the case is required, follow the instructions below.
 
+Download the project files from the link below:
+
+https://transfer.it/t/EvuVqRl3zBxY
+
 # Compilation
 ### Requirements
 * OpenFOAM, preferably v8
