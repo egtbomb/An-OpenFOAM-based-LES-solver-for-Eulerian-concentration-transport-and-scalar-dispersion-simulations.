@@ -11,6 +11,7 @@ The code provided was written for OpenFoam version 8 and requires modifications 
 Before running the simulation, the solver modifications related to the Eulerian concentration equation must be compiled.
 
 * Clone the code to your computer:
+* In the lesEulerianConcentration/concenFoamCode directory, it is necessary to compile the solver code that couples the turbulent flow equations with the Eulerian concentration equation
 *Enter the source code directory.
 * Compile the code in $FOAM_UTILITIES/preProcessing/CDRFGcode:
   
